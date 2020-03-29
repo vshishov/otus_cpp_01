@@ -12,9 +12,7 @@ script:
 before_deploy: "echo 'Deploy running'"
 
 deploy:
-  provider: bintray
-  file: helloworld-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb
-  user: vshishov
-  api_key: $BINTRAY_API_KEY
-  #passphrase: "Optional. In case a passphrase is configured on Bintray and GPG signing is used"
-  skip_cleanup: true # to upload artifacts created during the build
+  provider: script
+  skip_cleanup: true
+  script:
+  - curl -T helloworld-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb -uvshishov:$BINTRAY_API_KEY "https://api.bintray.com/content/vshishov/otus_cpp/hello_world/$TRAVIS_BUILD_NUMBER/helloworld-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"
