@@ -13,7 +13,7 @@ before_deploy: "echo 'Deploy running'"
 
 deploy:
   provider: bintray
-  file: helloworld-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb
+  file: https://dl.bintray.com/vshishov/otus_cpp_helloworld/$TRAVIS_BUILD_NUMBER/helloworld-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb
   user: vshishov
   key: $BINTRAY_API_KEY
   #passphrase: "Optional. In case a passphrase is configured on Bintray and GPG signing is used"
