@@ -3,7 +3,7 @@
 #include <gtest/gtest.h>
  
 TEST(VersionTest, ValidVersion) { 
-    ASSERT_NE(0, version());
+    ASSERT_EQ(0, version());
 }
  
 int main(int argc, char **argv) {
