@@ -4,11 +4,16 @@ project(helloworld VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
 
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
+# Locate GTest
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
+
 configure_file(version.h.in version.h)
 
 add_executable(helloworld_cli main.cpp)
 add_library(helloworld lib.cpp)
 add_executable(test_version test_version.cpp)
+add_executable(gtest_version gtest_version.cpp)
 
 set_target_properties(helloworld_cli helloworld test_version PROPERTIES
     CXX_STANDARD 14
@@ -28,6 +33,12 @@ target_link_libraries(helloworld_cli PRIVATE
 target_link_libraries(test_version
     ${Boost_LIBRARIES}
     helloworld
+)
+
+target_link_libraries(gtest_version 
+    ${GTEST_LIBRARIES} 
+    helloworld
+    pthread
 )
 
 if (MSVC)
@@ -52,8 +63,6 @@ else ()
     )
 endif()
 
-
-
 install(TARGETS helloworld_cli RUNTIME DESTINATION bin)
 
 set(CPACK_GENERATOR DEB)
@@ -69,3 +78,4 @@ include(CPack)
 enable_testing()
 
 add_test(test_version test_version)
+add_test(gtest_version test_version)
