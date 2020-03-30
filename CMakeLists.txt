@@ -43,10 +43,12 @@ target_link_libraries(test_version
     helloworld
 )
 
-target_link_libraries(gtest_version 
+find_package(Threads)
+
+target_link_libraries(gtest_version
     ${GTEST_LIBRARIES} 
+    ${CMAKE_THREAD_LIBS_INIT}
     helloworld
-    pthread
 )
 
 if (MSVC)
